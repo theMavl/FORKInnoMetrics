@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Button component Test render Button component 1`] = `
+<button
+  disabled={false}
+  style={Object {}}
+>
+  <i
+    className="material-icons"
+  />
+  <span>
+    Button
+  </span>
+</button>
+`;

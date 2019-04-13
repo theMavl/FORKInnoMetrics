@@ -1,0 +1,38 @@
+.header {
+    min-height: var(--header-height);
+    padding: 10px var(--page-padding);
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(var(--header-color), 1);
+}
+
+@media all and (max-width: 450px) {
+    .header {
+        justify-content: center;
+    }
+    .header :nth-child(1) {
+        order: 1;
+    }
+
+    .header :nth-child(2) {
+        order: 3;
+    }
+
+    .header :nth-child(3) {
+        order: 2;
+    }
+}
+
+.headerItem > a {
+    color: rgba(255, 255, 255, 1);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.logoItem {
+    composes: headerItem;
+    padding-right: 10px;
+}

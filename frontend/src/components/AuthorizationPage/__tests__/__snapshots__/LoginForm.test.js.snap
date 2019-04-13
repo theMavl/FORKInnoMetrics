@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test LoginForm component Test shallow render LoginForm component 1`] = `
+<LoginForm
+  props={Object {}}
+/>
+`;

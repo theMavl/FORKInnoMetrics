@@ -1,0 +1,49 @@
+.aside {
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+
+    box-shadow: 0 0 5px 0px rgba(100, 100, 100, 0.5);
+}
+
+.asideOpened {
+    composes: aside;
+    min-width: calc(var(--cell-size) * 3);
+}
+
+.asideClosed {
+    composes: aside;
+    width: calc(var(--cell-size) * 1);
+}
+
+.navContainer {
+    overflow: hidden;
+}
+
+.nav {
+    margin-right: -17px;
+    overflow-y: scroll;
+}
+
+.navItem {
+    padding: calc(var(--cell-size) / 4) var(--page-padding);
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+    color: initial;
+
+    cursor: pointer;
+}
+
+.navItem > i {
+    padding-right: calc(var(--cell-size) / 4);
+    font-size: 30px;
+}
+
+.openCloseBtn {
+    composes: navItem;
+    box-shadow: 0 0 5px 0px rgba(100, 100, 100, 0.15);
+}

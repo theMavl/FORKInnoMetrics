@@ -1,0 +1,57 @@
+.tableView {
+    composes: view from '../style.css'
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+
+    padding: calc(var(--cell-size) / 4);
+}
+
+.row {
+    width: 100%;
+    overflow: hidden;
+
+    display: flex;
+}
+
+.headerRow {
+    composes: row;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.cell {
+    height: var(--cell-size);
+}
+
+.cell:nth-child(1), .cell:nth-child(2) {
+    width: calc(var(--cell-size) * 2);
+    flex-shrink: 0;
+}
+
+.cell:nth-child(3) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 auto 0 0;
+}
+
+.truncated {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sortDirection {
+    font-size: inherit;
+    vertical-align: middle;
+}
+
+.selectedActivity {
+    background-color: rgba(136, 132, 216, 0.31);
+}

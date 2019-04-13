@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Footer component Test render Footer component 1`] = `
+<footer>
+  <h4>
+    Contact us
+  </h4>
+  <div>
+    <div>
+      <h5>
+        Product, desktop clients questions
+        :
+      </h5>
+      <div>
+        <span>
+          Ihar Shulhan
+        </span>
+        <span>
+          <i
+            className="material-icons"
+          >
+            email
+          </i>
+          <a
+            href="mailto:i.shulgan@innopolis.ru"
+          >
+            i.shulgan@innopolis.ru
+          </a>
+        </span>
+        <span>
+          <i
+            className="material-icons"
+          >
+            near_me
+          </i>
+          <a
+            href="https://t.me/ihar_shulhan"
+          >
+            @
+            ihar_shulhan
+          </a>
+        </span>
+      </div>
+    </div>
+    <div>
+      <h5>
+        Website questions
+        :
+      </h5>
+      <div>
+        <span>
+          Daria Larionova
+        </span>
+        <span>
+          <i
+            className="material-icons"
+          >
+            email
+          </i>
+          <a
+            href="mailto:d.larionova@innopolis.ru"
+          >
+            d.larionova@innopolis.ru
+          </a>
+        </span>
+        <span>
+          <i
+            className="material-icons"
+          >
+            near_me
+          </i>
+          <a
+            href="https://t.me/DaryaLari"
+          >
+            @
+            DaryaLari
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+`;

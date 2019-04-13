@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test LandingPage component Test render LandingPage component 1`] = `
+<main>
+  <div>
+    <div>
+      <h1>
+        Analyze your activity
+      </h1>
+      <h1>
+        and 
+      </h1>
+      <h1>
+        Improve Productivity
+      </h1>
+    </div>
+  </div>
+  <div>
+    <h2>
+      Download links
+    </h2>
+    <p>
+      <a
+        download={true}
+        href="https://innometric.guru/files/InnometricsMac.zip"
+      >
+        MacOS client
+      </a>
+      <br />
+      <a
+        download={true}
+        href="https://innometric.guru/files/EclipseLogger_1.0.0.jar"
+      >
+        Eclipse plugin
+      </a>
+      <br />
+      Others coming soon...
+    </p>
+  </div>
+</main>
+`;

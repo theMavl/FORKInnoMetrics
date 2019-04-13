@@ -1,0 +1,39 @@
+.footer {
+    background-color: rgba(var(--footer-color), 1);
+    color: rgba(255, 255, 255, 0.8);
+    min-height: var(--footer-height);
+    padding: calc(var(--page-padding) / 2) var(--page-padding);
+}
+
+.footer > h4, .questions h5 {
+    margin-top: 0;
+}
+
+.questions {
+    display: flex;
+    /*justify-content: space-between;*/
+    flex-wrap: wrap;
+}
+
+.question {
+    padding-right: var(--cell-size);
+}
+
+.name {
+    display: block;
+    margin: 5px 0;
+}
+
+.userContact {
+    display: block;
+}
+
+.userContact > i {
+    font-size: inherit;
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.userContact > a {
+    color: inherit;
+}

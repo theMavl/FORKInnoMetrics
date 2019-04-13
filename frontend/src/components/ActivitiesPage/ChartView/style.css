@@ -1,0 +1,9 @@
+.chartView {
+    composes: view from '../style.css'
+}
+
+.truncated {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test PeriodPicker component Test shallow render PeriodPicker component 1`] = `<Connect(ReduxForm) />`;

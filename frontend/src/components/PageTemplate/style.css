@@ -1,0 +1,28 @@
+.main {
+    width: 100%;
+    /*background-color: rgba(230, 230, 230, 1);*/
+    padding: var(--page-padding);
+    overflow-x: hidden;
+}
+
+.titleRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pageTitle {
+    line-height: var(--cell-size);
+}
+
+.pageTitle > h1 {
+    margin: 0 auto 0 0;
+    padding-right: 5px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.content {
+    padding-top: calc(var(--cell-size) / 2);
+}

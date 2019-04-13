@@ -1,0 +1,20 @@
+.logo {
+    font-size: x-large;
+}
+
+.logo > a {
+    text-decoration: none;
+    color: white;
+}
+
+.name {
+    letter-spacing: -1px;
+}
+
+.inno {
+    /*color: rgba(250, 150, 50, 1);*/
+}
+
+.metrics {
+    /*color: rgba(25, 255, 255, 1);*/
+}

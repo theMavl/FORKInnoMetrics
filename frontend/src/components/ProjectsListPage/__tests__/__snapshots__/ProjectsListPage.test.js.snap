@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test ProjectsListPage component Test render ProjectsListPage component 1`] = `
+<article>
+  <div>
+    <span>
+      <h1>
+        Projects
+      </h1>
+    </span>
+  </div>
+  <div>
+    <div>
+      <div
+        onClick={[Function]}
+      >
+        <span>
+          proj 1
+        </span>
+      </div>
+      <div
+        onClick={[Function]}
+      >
+        <span>
+          proj 2
+        </span>
+      </div>
+      <div
+        onClick={[Function]}
+      >
+        <span>
+          proj 3
+        </span>
+      </div>
+    </div>
+  </div>
+</article>
+`;

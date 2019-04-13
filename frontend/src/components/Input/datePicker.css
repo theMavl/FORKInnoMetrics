@@ -1,0 +1,9 @@
+.input {
+    width: calc(var(--cell-size) * 1.5);
+
+    outline: none;
+    border: none;
+    border-bottom: solid black 1px;
+    text-align: center;
+    cursor: pointer;
+}

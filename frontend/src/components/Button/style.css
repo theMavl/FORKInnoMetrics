@@ -1,0 +1,51 @@
+.button {
+    min-width: calc(var(--cell-size) * 3);
+    min-height: calc(var(--cell-size) * 0.75);
+    border: none;
+    border-radius: 5px;
+    font-size: larger;
+    box-shadow: 0 0 5px 0px rgba(100, 100, 100, 0.5);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.button:disabled {
+    filter: brightness(75%);
+}
+
+.button:active {
+    filter: brightness(115%);
+}
+
+/*.button:focus {*/
+    /*outline: none;*/
+/*}*/
+
+.button > i {
+    padding-right: 5px;
+    font-weight: bold;
+}
+
+.primary {
+    composes: button;
+    background-color: rgba(30, 235, 145, 1);
+    color: rgba(255, 255, 255, 1);
+}
+
+.secondary {
+    composes: button;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(60, 200, 255, 1);
+    border: rgba(60, 200, 255, 1) solid 1px;
+}
+
+.action {
+    composes: button;
+    background-color: rgba(255, 255, 255, 1);
+    /*color: rgba(100, 100, 100, 1);*/
+    /*border: rgba(100, 100, 100, 1) solid 1px;*/
+}

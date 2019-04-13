@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test AuthorizedRoute component Test shallow render AuthorizedRoute component 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <Connect(AuthRoute) />
+</Router>
+`;
+
+exports[`Test AuthorizedRoute component Test shallow render Component in AuthorizedRoute when user authenticated 1`] = `
+<div>
+  Component
+</div>
+`;
+
+exports[`Test AuthorizedRoute component Test shallow render Component in AuthorizedRoute when user not authenticated 1`] = `
+<div>
+  Redirect
+</div>
+`;

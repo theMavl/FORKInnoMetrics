@@ -1,0 +1,30 @@
+.period {
+    padding: 0 calc(var(--cell-size) / 4);
+    font-weight: initial;
+}
+
+.commonView {
+    /*display: flex;*/
+    /*justify-content: stretch;*/
+    /*flex-wrap: wrap;*/
+    background-color: rgba(255, 255, 255, 1);
+    padding: 0;
+}
+
+.truncated {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.view {
+    /*width: 50%;*/
+    width: 100%;
+}
+
+/*@media all and (max-width: 1000px) {*/
+    /*.view {*/
+        /*width: 100%;*/
+    /*}*/
+/*}*/
+

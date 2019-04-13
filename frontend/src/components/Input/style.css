@@ -1,0 +1,65 @@
+.container {
+    width: 100%;
+    height: calc(var(--cell-size) * 1.5);
+    padding: 5px 0;
+}
+
+.label {
+    display: block;
+    width: 100%;
+    margin: 0 0 5px 0;
+}
+
+.required {
+    color: rgba(255, 0, 0, 1);
+}
+
+.input {
+    display: block;
+    width: 100%;
+    height: calc(var(--cell-size) / 2);
+    margin: 5px 0 5px 0;
+    padding: 0 5px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0px rgba(100, 100, 100, 0.15);
+    border-bottom: 1px solid rgba(100, 100, 100, 0.25);
+}
+
+.input:focus {
+    outline: none;
+}
+
+.messages {
+    display: block;
+    width: 100%;
+    font-size: smaller;
+}
+
+.error {
+    color: rgba(255, 0, 0, 1);
+}
+
+
+
+.checkboxContainer {
+    composes: container;
+    height: calc(var(--cell-size)*0.75);
+    display: flex;
+    align-items: center;
+}
+
+.checkboxLabel {
+    composes: label;
+    padding-left: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.checkboxInput {
+    composes: input;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}

@@ -1,0 +1,38 @@
+:root {
+    --cell-size: 60px;
+    --page-padding: calc(var(--cell-size) / 4);
+    --header-height: calc(var(--cell-size));
+    --footer-height: calc(var(--cell-size) * 2);
+
+    --header-color: 60, 60, 60;
+    --footer-color: 60, 60, 60;
+}
+
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    /*width: 100vw;*/
+    /*min-width: 750px;*/
+    height: 100vh;
+    overflow-y: scroll;
+
+    font-family: 'PT Sans', sans-serif;
+}
+
+main {
+    width: 100%;
+    min-height: calc(100% - var(--header-height) - var(--footer-height));
+    position: relative;
+    display: flex;
+    justify-content: stretch;
+}
+
+i {
+    overflow: hidden;
+}

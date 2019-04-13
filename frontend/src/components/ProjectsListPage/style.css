@@ -1,0 +1,16 @@
+.project {
+    min-height: var(--cell-size);
+    width: 100%;
+    padding: 0 calc(var(--cell-size) / 4);
+    box-shadow: 0 0 5px 0px rgba(100, 100, 100, 0.15);
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.projectName {
+    font-size: larger;
+}

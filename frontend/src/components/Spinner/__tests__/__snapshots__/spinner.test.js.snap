@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Spinner component Test render Spinner component 1`] = `
+<div>
+  <div>
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+  </div>
+</div>
+`;

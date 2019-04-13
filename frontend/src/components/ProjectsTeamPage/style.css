@@ -1,0 +1,10 @@
+.inviteForm {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.inviteForm > h2 {
+    display: block;
+    width: 100%;
+    font-weight: normal;
+}

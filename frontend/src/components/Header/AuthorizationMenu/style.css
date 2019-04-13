@@ -1,0 +1,18 @@
+.authMenu {
+    padding: 0 0 0 10px;
+    display: flex;
+    align-items: baseline;
+    margin-left: auto;
+    flex-wrap: wrap;
+}
+
+.authItem {
+    composes: headerItem from '../style.css';
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.authItem:nth-child(3) {
+    order: 3;
+}

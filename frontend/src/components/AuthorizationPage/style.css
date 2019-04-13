@@ -1,0 +1,64 @@
+.content {
+    padding: var(--page-padding);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*justify-content: center;*/
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.msgTitle {
+    margin: 0;
+    height: calc(var(--cell-size));
+    text-align: center;
+}
+
+.description {
+    width: 100%;
+    height: calc(var(--cell-size));
+    margin: 0;
+    /*text-align: center;*/
+}
+
+.buttonsRow {
+    width: 100%;
+    display: flex;
+    /*justify-content: space-around;*/
+}
+
+.form {
+    padding: 0 calc(var(--cell-size) / 4);
+    width: calc(var(--cell-size) * 6);
+    background-color: rgba(255, 255, 255, 1);
+}
+
+@media all and (max-width: 360px) {
+    .form {
+        width: 100%;
+    }
+}
+
+.inputRow {
+    height: calc(var(--cell-size) / 2);
+}
+
+.submitBtn {
+    height: calc(var(--cell-size) / 2);
+    width: var(--cell-size);
+}
+
+.errorMsg {
+    color: rgba(255, 0, 0, 1)
+}
+
+.formError {
+    composes: errorMsg;
+    height: calc(var(--cell-size) / 4);
+    width: 100%;
+    text-align: center;
+}
+
+.suggestion {
+    text-align: center;
+}

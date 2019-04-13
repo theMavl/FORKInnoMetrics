@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test AuthorizationMenu component Test render 'Login or Register' when not authenticated 1`] = `
+<div>
+  <div>
+    <a
+      aria-current={null}
+      href="/login"
+      onClick={[Function]}
+    >
+      Login
+    </a>
+  </div>
+  <span
+    style={
+      Object {
+        "padding": "0 5px 0 5px",
+      }
+    }
+  >
+     or 
+  </span>
+  <div>
+    <a
+      aria-current={null}
+      href="/register"
+      onClick={[Function]}
+    >
+      Register
+    </a>
+  </div>
+</div>
+`;
+
+exports[`Test AuthorizationMenu component Test render 'Logout' when authenticated 1`] = `
+<div
+  onClick={[Function]}
+>
+  <div>
+    Logout
+  </div>
+</div>
+`;

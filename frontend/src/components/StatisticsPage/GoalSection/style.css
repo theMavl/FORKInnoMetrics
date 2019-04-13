@@ -1,0 +1,168 @@
+.goal {
+    margin-bottom: calc(var(--cell-size) / 2);
+}
+
+.goal > span {
+    display: block;
+    margin: 0;
+    min-height: var(--cell-size);
+    /*font-size: larger;*/
+}
+
+.goalName {
+    margin: 0;
+    display: inline-block;
+    font-weight: normal;
+}
+
+.panel {
+    min-height: calc(var(--cell-size) * 2);
+    background-color: white;
+    box-shadow: 0 0 5px 0px rgba(100, 100, 100, 0.15);
+}
+
+.emptyPanel {
+    composes: panel;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tiles {
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+    flex-wrap: wrap;
+}
+
+.tile {
+    height: calc(var(--cell-size) * 2);
+    padding: calc(var(--cell-size) / 4);
+    flex-grow: 1;
+
+    box-shadow: 0 0 5px 0px rgba(100, 100, 100, 0.15);
+
+    display: grid;
+    grid-template-rows: 70% 30%;
+    grid-template-columns: 50% 50%;
+
+    cursor: pointer;
+}
+
+.tileActive {
+    composes: tile;
+    box-shadow: 0 5px 5px 0px rgba(20, 130, 230, 1);
+}
+
+.metricName {
+    vertical-align: bottom;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1em;
+    grid-column: 1 / -1;
+    grid-row: 2 / span 1;
+}
+
+.metricValue {
+    line-height: 100%;
+    text-align: left;
+    font-size: 2em;
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+}
+
+@media all and (min-width: 1200px) {
+    .metricValue {
+        font-size: 3em;
+    }
+}
+
+.metricTrend {
+    line-height: 100%;
+    text-align: right;
+    font-size: 1.5em;
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+}
+
+.positiveTrend {
+    composes: metricTrend;
+    color: green;
+}
+
+.negativeTrend {
+    composes: metricTrend;
+    color: red;
+}
+
+.trendArrow {
+    padding: 0 25px;
+    width: 15px;
+    font-size: 24px;
+    vertical-align: middle;
+}
+
+.openedTabArea {
+    padding: 0;
+    position: relative;
+    display: flex;
+}
+
+.chart {
+    flex-grow: 1;
+    padding: calc(var(--cell-size) / 4);
+}
+
+.emptyChart {
+    composes: chart;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    width: calc(var(--cell-size) * 2);
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+
+    color: rgba(100, 100, 100, 1);
+}
+
+.closeIcon {
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*right: 0;*/
+    /*z-index: 1;*/
+    padding: calc(var(--cell-size) / 2);
+    font-size: 36px;
+    color: rgba(100, 100, 100, 1);
+
+    display: block;
+    box-shadow: 0 0 5px 0px rgba(100, 100, 100, 0.15);
+
+    cursor: pointer;
+}
+
+.moreButton {
+    padding: calc(var(--cell-size) / 2) 0;
+    flex-grow: 1;
+    box-shadow: 0 0 5px 0px rgba(100, 100, 100, 0.15);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    text-decoration: none;
+    color: inherit;
+    /*cursor: pointer;*/
+}
+
+.moreButton > i {
+    font-size: 36px;
+    padding: calc(var(--cell-size) / 2);
+    display: block;
+}

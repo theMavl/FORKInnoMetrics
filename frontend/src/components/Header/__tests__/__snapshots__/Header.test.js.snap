@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Header component Test render Header component 1`] = `
+<header>
+  <div
+    onClick={[Function]}
+  >
+    <div>
+      <a
+        aria-current="page"
+        className="active"
+        href="/"
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <span>
+          <span>
+            Inno
+          </span>
+          <span>
+            Metrics
+          </span>
+        </span>
+      </a>
+    </div>
+  </div>
+  <nav />
+  <div>
+    <div>
+      <a
+        aria-current={null}
+        href="/login"
+        onClick={[Function]}
+      >
+        Login
+      </a>
+    </div>
+    <span
+      style={
+        Object {
+          "padding": "0 5px 0 5px",
+        }
+      }
+    >
+       or 
+    </span>
+    <div>
+      <a
+        aria-current={null}
+        href="/register"
+        onClick={[Function]}
+      >
+        Register
+      </a>
+    </div>
+  </div>
+</header>
+`;

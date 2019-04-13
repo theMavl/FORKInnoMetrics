@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Logo component Test render Logo component 1`] = `
+<div>
+  <a
+    aria-current="page"
+    className="active"
+    href="/"
+    onClick={[Function]}
+    style={Object {}}
+  >
+    <span>
+      <span>
+        Inno
+      </span>
+      <span>
+        Metrics
+      </span>
+    </span>
+  </a>
+</div>
+`;

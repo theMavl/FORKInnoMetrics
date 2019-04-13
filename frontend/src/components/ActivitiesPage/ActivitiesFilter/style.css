@@ -1,0 +1,8 @@
+.showHideBtn {
+    display: inline-block;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+
+    padding: 0 0 15px 0;
+}
