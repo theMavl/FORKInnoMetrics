@@ -171,7 +171,8 @@ def login():
             return make_response(jsonify({MESSAGE_KEY: 'User not found'}), HTTPStatus.NOT_FOUND)
         if _check_password(password, existing_user.password):
             login_user(existing_user)
-            return make_response(jsonify({MESSAGE_KEY: 'Success',
+            print(existing_user.public_key)
+            return make_response(jsonify({MESSAGE_KEY: 'Success!', PUBLIC_KEY: existing_user.public_key,
                                           TOKEN_KEY: encode_auth_token(str(existing_user.id)).decode()}), HTTPStatus.OK)
         return make_response(jsonify({MESSAGE_KEY: 'Failed to authenticate'}), HTTPStatus.UNAUTHORIZED)
     except Exception as e:
@@ -222,8 +223,10 @@ def user_register():
         password: str = data.get(PASSWORD_KEY)
         name: str = data.get(NAME_KEY)
         surname: str = data.get(SURNAME_KEY)
+        public_key: str = data.get(PUBLIC_KEY)
+        mas_pas_enc: str = data.get(MAS_PAS_ENC)
 
-        if not (email and password and name and surname):
+        if not (email and password and name and surname and public_key and mas_pas_enc):
             return make_response(jsonify({MESSAGE_KEY: 'Not enough data provided'}), HTTPStatus.BAD_REQUEST)
 
         existing_user = User.objects(email=email).first()
@@ -232,7 +235,8 @@ def user_register():
         if existing_user:
             return make_response(jsonify({MESSAGE_KEY: 'User already exists'}), HTTPStatus.CONFLICT)
 
-        user = User(email=email, password=_hash_password(password), name=name, surname=surname)
+        user = User(email=email, password=_hash_password(password), name=name, surname=surname, public_key=public_key,
+                    mas_pas_enc=mas_pas_enc)
         if not user:
             return make_response(jsonify({MESSAGE_KEY: 'Failed to create user'}), HTTPStatus.INTERNAL_SERVER_ERROR)
 
@@ -241,6 +245,66 @@ def user_register():
     except Exception as e:
         logger.exception(f'Failed to register user. Error {e}')
         return make_response(jsonify({MESSAGE_KEY: 'Something bad happened'}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
+@app.route('/restore_master_password', methods=['GET'])
+@login_required
+def get_encrypted_master_password():
+    """
+    Get encrypted master password
+    ---
+    get:
+        summary: Get encrypted master password
+        description: Get encrypted master password of current user.
+        responses:
+            200:
+                description: Encrypted master password is returned
+    """
+
+    return make_response(jsonify({MESSAGE_KEY: 'Success', MAS_PAS_ENC: current_user.mas_pas_enc}), HTTPStatus.OK)
+
+
+@app.route('/new_master_password', methods=['POST'])
+@login_required
+def change_master_password():
+    """
+    Re-encrypts all user's activities using new master password, saves the new public_key and new mas_pas_enc
+    ---
+    get:
+        summary: Set new master password
+        description: Re-encrypts all user's activities using new master password, saves the new public_key and new mas_pas_enc
+        parameters:
+            -   name: current_private_key
+                in: args
+                required: true
+                type: string
+                description: current private key
+            -   name: new_public_key
+                in: args
+                required: true
+                type: string
+                description: new public key
+            -   name: new_mas_pas_enc
+                in: args
+                required: false
+                type: string
+                description: new encrypted master password
+        responses:
+            400:
+                description: Wrong format
+            200:
+                description: Password changing request was accepted
+    """
+    data = flask.request.json if flask.request.json else flask.request.form
+    current_private_key: str = data.get(CURRENT_PRIVATE_KEY)
+    new_public_key: str = data.get(NEW_PUBLIC_KEY)
+    new_mas_pas_enc: str = data.get(NEW_MAS_PAS_ENC)
+
+    if not (current_private_key and new_public_key and new_mas_pas_enc):
+        return make_response(jsonify({MESSAGE_KEY: 'Not enough data provided'}), HTTPStatus.BAD_REQUEST)
+    # TODO: Verify current_private_key
+
+    return make_response(jsonify({MESSAGE_KEY: 'Success', MAS_PAS_ENC: current_user.mas_pas_enc}), HTTPStatus.OK)
 
 
 @app.route('/project', methods=['POST'])

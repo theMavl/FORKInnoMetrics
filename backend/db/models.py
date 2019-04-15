@@ -23,8 +23,12 @@ class User(Document, UserMixin):
     password = StringField(max_length=DEFAULT_STRING_MAX_LENGTH)
     name = StringField(max_length=DEFAULT_STRING_MAX_LENGTH)
     surname = StringField(max_length=DEFAULT_STRING_MAX_LENGTH)
+    public_key = StringField(max_length=DEFAULT_STRING_MAX_LENGTH)
+    mas_pas_enc = StringField(max_length=DEFAULT_STRING_MAX_LENGTH)
     active = BooleanField(default=True)
     confirmed_at = DateTimeField()
+    last_mas_pas_changed = DateTimeField()
+    mas_pas_change_in_progress = BooleanField()
     roles = ListField(ReferenceField(Role), default=[])
 
 
@@ -37,6 +41,7 @@ class Project(Document):
 
 
 class Activity(Document):
+    eEKey = StringField(max_length=DEFAULT_STRING_MAX_LENGTH, required=True)  # Encrypted encKey
     idle_activity = BooleanField(default=False)
     activity_type = StringField(max_length=DEFAULT_STRING_MAX_LENGTH, default='os')
     user = ReferenceField(User)
@@ -48,6 +53,3 @@ class Activity(Document):
     ip_address = StringField(max_length=DEFAULT_STRING_MAX_LENGTH)
     mac_address = StringField(max_length=DEFAULT_STRING_MAX_LENGTH)
     value = StringField(max_length=DEFAULT_STRING_MAX_LENGTH)
-
-
-

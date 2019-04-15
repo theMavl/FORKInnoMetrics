@@ -6,7 +6,7 @@
   "main": "src/index.js",
   "scripts": {
     "with-dev-server": "set DOMAIN_ADDRESS='http://flask:8120/api' && nodemon ./stub/startServer.js",
-    "dev": "set DOMAIN_ADDRESS='https://innometrics-proxy-server.herokuapp.com/https://innometric.guru:8120' && webpack-dev-server --host 0.0.0.0",
+    "dev": "set DOMAIN_ADDRESS='http://127.0.0.1:8120' && webpack-dev-server --host 0.0.0.0",
     "build": "webpack --mode production --config webpack.prod.js",
     "bologna_build": "set DOMAIN_ADDRESS='/innometrics/api' && set FRONTEND_ADDRESS='/innometrics' && webpack --mode production --config webpack.prod.js",
     "test": "jest",

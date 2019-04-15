@@ -19,15 +19,17 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "8090:8090"
+      - "8080:8080"
     # restart: on-failure
+    environment:
+      NOT_DOMAIN_ADDRESS: "http://127.0.0.1:8120"
+      # FRONTEND_ADDRESS: 'http://0.0.0.0:8080/'
     volumes:
       - ./frontend:/usr/app/
       - /usr/app/node_modules
     depends_on:
       - flask
-    command: npm run with-dev-server
-
+    command: npm run dev
 
   mongo:
     image: mongo
