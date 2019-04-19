@@ -5,7 +5,7 @@ import { processApiError } from './errorProcessors'
 /* DOMAIN_ADDRESS initialized by process.env in 'webpack.config.js' */
 
 const request = axios.create({
-  baseURL: 'http://127.0.0.1:8120', //DOMAIN_ADDRESS,
+  baseURL: DOMAIN_ADDRESS,
   headers: {
     'Content-Type': 'multipart/form-data'
   }

@@ -22,7 +22,7 @@ services:
       - "8080:8080"
     # restart: on-failure
     environment:
-      NOT_DOMAIN_ADDRESS: "http://127.0.0.1:8120"
+      DOMAIN_ADDRESS: '"http://localhost:8120"'
       # FRONTEND_ADDRESS: 'http://0.0.0.0:8080/'
     volumes:
       - ./frontend:/usr/app/

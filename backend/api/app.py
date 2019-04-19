@@ -26,7 +26,7 @@ from logger import logger
 from utils import execute_function_in_parallel
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=['https://innometrics.guru'])
+CORS(app, supports_credentials=True)#, origins=['https://innometrics.guru'])
 
 flask_config = config['FLASK']
 app.secret_key = flask_config['SECRET_KEY']
