@@ -14,15 +14,19 @@ try:
 except:
     INNOMETRICS_PRODUCTION = False
 
+RSA_MODULO = 1024
+
 EMAIL_KEY = 'email'
 PASSWORD_KEY = 'password'
 NAME_KEY = 'name'
 SURNAME_KEY = 'surname'
 PUBLIC_KEY = 'public_key'
-MAS_PAS_ENC = 'mas_pas_enc'
-CURRENT_PRIVATE_KEY = 'current_private_key'
-NEW_PUBLIC_KEY = 'new_public_key'
-NEW_MAS_PAS_ENC = 'new_mas_pas_enc'
+PRIVATE_KEY = 'private_key'
+PUBLIC_KEY_H = 'public_key_h'
+PRIVATE_KEY_H = 'private_key_h'
+OLD_PASSWORD_KEY = 'old_password'
+NEW_PASSWORD_KEY = 'new_password'
+ENC_KEY_H = 'enc_key_h'
 
 ACTIVITY_KEY = 'activity'
 ACTIVITIES_KEY = 'activities'

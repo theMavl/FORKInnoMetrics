@@ -2,6 +2,7 @@ apispec==0.39.0
 asn1crypto==0.24.0
 Babel==2.6.0
 bcrypt==3.1.4
+pycryptodome==3.8.1
 blinker==1.4
 cffi==1.11.5
 click==6.7

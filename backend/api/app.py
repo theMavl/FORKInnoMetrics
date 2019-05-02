@@ -9,6 +9,7 @@ from typing import Optional
 import bcrypt
 import flask
 import jwt
+from Crypto import Random
 from apispec.ext.flask import FlaskPlugin
 from apispec.ext.marshmallow import MarshmallowPlugin
 from flask import Flask, make_response, jsonify
@@ -25,8 +26,12 @@ from db.models import User
 from logger import logger
 from utils import execute_function_in_parallel
 
+from Crypto.PublicKey import RSA
+import Crypto.IO.PKCS8 as PKCS8
+import base64
+
 app = Flask(__name__)
-CORS(app, supports_credentials=True)#, origins=['https://innometrics.guru'])
+CORS(app, supports_credentials=True)  # , origins=['https://innometrics.guru'])
 
 flask_config = config['FLASK']
 app.secret_key = flask_config['SECRET_KEY']
@@ -171,9 +176,19 @@ def login():
             return make_response(jsonify({MESSAGE_KEY: 'User not found'}), HTTPStatus.NOT_FOUND)
         if _check_password(password, existing_user.password):
             login_user(existing_user)
-            print(existing_user.public_key)
-            return make_response(jsonify({MESSAGE_KEY: 'Success!', PUBLIC_KEY: existing_user.public_key,
-                                          TOKEN_KEY: encode_auth_token(str(existing_user.id)).decode()}), HTTPStatus.OK)
+
+            # response = make_response(jsonify({MESSAGE_KEY: 'Success!', PUBLIC_KEY: existing_user.public_key,
+            #                               TOKEN_KEY: encode_auth_token(str(existing_user.id)).decode()}), HTTPStatus.OK)
+            response = make_response(
+                jsonify({MESSAGE_KEY: 'Success!',
+                         TOKEN_KEY: encode_auth_token(str(existing_user.id)).decode(),
+                         PUBLIC_KEY: existing_user.public_key,
+                         PRIVATE_KEY_H: existing_user.private_key_h
+                         }),
+                HTTPStatus.OK)
+            response.set_cookie(PUBLIC_KEY, existing_user.public_key)
+            response.set_cookie(PRIVATE_KEY_H, existing_user.private_key_h)
+            return response
         return make_response(jsonify({MESSAGE_KEY: 'Failed to authenticate'}), HTTPStatus.UNAUTHORIZED)
     except Exception as e:
         logger.exception(f'Failed to login user. Error {e}')
@@ -223,10 +238,8 @@ def user_register():
         password: str = data.get(PASSWORD_KEY)
         name: str = data.get(NAME_KEY)
         surname: str = data.get(SURNAME_KEY)
-        public_key: str = data.get(PUBLIC_KEY)
-        mas_pas_enc: str = data.get(MAS_PAS_ENC)
 
-        if not (email and password and name and surname and public_key and mas_pas_enc):
+        if not (email and password and name and surname):
             return make_response(jsonify({MESSAGE_KEY: 'Not enough data provided'}), HTTPStatus.BAD_REQUEST)
 
         existing_user = User.objects(email=email).first()
@@ -235,8 +248,15 @@ def user_register():
         if existing_user:
             return make_response(jsonify({MESSAGE_KEY: 'User already exists'}), HTTPStatus.CONFLICT)
 
-        user = User(email=email, password=_hash_password(password), name=name, surname=surname, public_key=public_key,
-                    mas_pas_enc=mas_pas_enc)
+        user = User(email=email, password=_hash_password(password), name=name, surname=surname)
+
+        key = RSA.generate(RSA_MODULO, Random.new().read)
+        private_key, public_key = key, key.publickey()
+        private_key_h = private_key.export_key(format="PEM", pkcs=8, passphrase=password)
+
+        user.public_key = public_key.export_key().decode("utf-8")
+        user.private_key_h = private_key_h.decode("utf-8")
+
         if not user:
             return make_response(jsonify({MESSAGE_KEY: 'Failed to create user'}), HTTPStatus.INTERNAL_SERVER_ERROR)
 
@@ -247,64 +267,74 @@ def user_register():
         return make_response(jsonify({MESSAGE_KEY: 'Something bad happened'}), HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
-@app.route('/restore_master_password', methods=['GET'])
+@app.route('/user/new_password', methods=['POST'])
 @login_required
-def get_encrypted_master_password():
+def new_password():
     """
-    Get encrypted master password
+    Change user's password
     ---
-    get:
-        summary: Get encrypted master password
-        description: Get encrypted master password of current user.
-        responses:
-            200:
-                description: Encrypted master password is returned
-    """
-
-    return make_response(jsonify({MESSAGE_KEY: 'Success', MAS_PAS_ENC: current_user.mas_pas_enc}), HTTPStatus.OK)
-
-
-@app.route('/new_master_password', methods=['POST'])
-@login_required
-def change_master_password():
-    """
-    Re-encrypts all user's activities using new master password, saves the new public_key and new mas_pas_enc
-    ---
-    get:
-        summary: Set new master password
-        description: Re-encrypts all user's activities using new master password, saves the new public_key and new mas_pas_enc
+    post:
+        summary: Password changing endpoint.
+        description: Change user's password.
         parameters:
-            -   name: current_private_key
-                in: args
+            -   in: formData
+                name: old_password
+                description: old user's password
                 required: true
                 type: string
-                description: current private key
-            -   name: new_public_key
-                in: args
+            -   in: formData
+                name: new_password
+                description: a new password
                 required: true
                 type: string
-                description: new public key
-            -   name: new_mas_pas_enc
-                in: args
-                required: false
-                type: string
-                description: new encrypted master password
         responses:
             400:
-                description: Wrong format
+                description: Parameters are not correct
+            401:
+                description: Wrong current password
+            406:
+                description: New password is the same as an old one
             200:
-                description: Password changing request was accepted
+                description: The password has been changed
     """
-    data = flask.request.json if flask.request.json else flask.request.form
-    current_private_key: str = data.get(CURRENT_PRIVATE_KEY)
-    new_public_key: str = data.get(NEW_PUBLIC_KEY)
-    new_mas_pas_enc: str = data.get(NEW_MAS_PAS_ENC)
+    try:
+        data = flask.request.json if flask.request.json else flask.request.form
+        old_password: str = data.get(OLD_PASSWORD_KEY)
+        new_password: str = data.get(NEW_PASSWORD_KEY)
 
-    if not (current_private_key and new_public_key and new_mas_pas_enc):
-        return make_response(jsonify({MESSAGE_KEY: 'Not enough data provided'}), HTTPStatus.BAD_REQUEST)
-    # TODO: Verify current_private_key
+        if not (old_password and new_password):
+            return make_response(jsonify({MESSAGE_KEY: 'Not enough data provided'}), HTTPStatus.BAD_REQUEST)
 
-    return make_response(jsonify({MESSAGE_KEY: 'Success', MAS_PAS_ENC: current_user.mas_pas_enc}), HTTPStatus.OK)
+        if not _check_password(old_password, current_user.password):
+            return make_response(jsonify({MESSAGE_KEY: 'Wrong current password'}), HTTPStatus.UNAUTHORIZED)
+
+        if old_password == new_password:
+            return make_response(jsonify({MESSAGE_KEY: 'New password is the same as an old one'}),
+                                 HTTPStatus.NOT_ACCEPTABLE)
+
+        try:
+            private_key = RSA.importKey(extern_key=current_user.private_key_h, passphrase=old_password)
+        except Exception as e:
+            logger.exception(f'Failed to change password. Error {e}')
+            return make_response(jsonify({MESSAGE_KEY: 'Provided password failed to decrypt user data'}),
+                                 HTTPStatus.UNAUTHORIZED)
+
+        private_key_h = private_key.export_key(format="PEM", pkcs=8, passphrase=new_password)
+        current_user.private_key_h = private_key_h.decode("utf-8")
+        current_user.password = str(_hash_password(new_password))[2:-1]
+        print(current_user.password)
+        current_user.save()
+
+        response = make_response(
+            jsonify({MESSAGE_KEY: 'Success!',
+                     PRIVATE_KEY_H: current_user.private_key_h
+                     }),
+            HTTPStatus.OK)
+        response.set_cookie(PRIVATE_KEY_H, current_user.private_key_h)
+        return response
+    except Exception as e:
+        logger.exception(f'Failed to change password. Error {e}')
+        return make_response(jsonify({MESSAGE_KEY: 'Something bad happened'}), HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
 @app.route('/project', methods=['POST'])
