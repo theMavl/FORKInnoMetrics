@@ -62,13 +62,15 @@
     "webpack-merge": "^4.1.4"
   },
   "optionalDependencies": {
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.19.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.3",
     "history": "^4.7.2",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
+    "nodemon": "^1.19.0",
+    "pbkdf2": "^3.0.17",
     "prop-types": "^15.6.2",
     "react-datepicker": "^2.0.0",
     "react-google-charts": "^3.0.10",
