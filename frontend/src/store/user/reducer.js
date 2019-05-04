@@ -9,7 +9,6 @@ const initialState = {
 }
 
 export const reducer = (state = initialState, action) => {
-
   if(action.type.startsWith('@@redux-form'))
     return {
       ...state,
@@ -28,7 +27,7 @@ export const reducer = (state = initialState, action) => {
       }
 
     case USER_TYPES.LOGIN_SUCCESS:
-      saveUserToLocalStorage(action.token)
+      saveUserToLocalStorage(action.token, action.password_h)
       return {
         authorized: true,
         activeRequest: false,

@@ -8,14 +8,15 @@ export const loginRequest = () => (dispatch, getState) => {
     dispatch({type: USER_TYPES.LOGIN_REQUEST})
 
     const userData = getState().form.authorization.values
+    const pass_h = generatePasswordHash(userData.email.trim(), userData.password.trim())
     const params = {
         email: userData.email.trim(),
-        password: generatePasswordHash(userData.email.trim(), userData.password.trim())
+        password: pass_h
     }
 
     postRequest('/login', params)
         .then((result) => {
-            dispatch({type: USER_TYPES.LOGIN_SUCCESS, token: result.data.token})
+            dispatch({type: USER_TYPES.LOGIN_SUCCESS, token: result.data.token, password_h: pass_h })
             redirectFromAuth()
         })
         .catch((error) => {

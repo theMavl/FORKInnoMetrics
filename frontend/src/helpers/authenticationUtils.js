@@ -1,5 +1,6 @@
 import {history} from './history'
 import _ from 'lodash'
+
 var pbkdf2 = require('pbkdf2');
 
 export const isTokenExists = () => {
@@ -14,8 +15,8 @@ export const getToken = () => {
     return ''
 }
 
-export const saveUserToLocalStorage = (token) => {
-    localStorage.setItem('user', JSON.stringify({token: token}))
+export const saveUserToLocalStorage = (token, password_h) => {
+    localStorage.setItem('user', JSON.stringify({token: token, password_h: password_h}))
 }
 
 export const removeUserFromLocalStorage = () => {
@@ -29,10 +30,15 @@ export const redirectFromAuth = () => {
     history.push(nextLocation)
 }
 
-export const generatePasswordHash = (login, password) => {
-    pbkdf2.pbkdf2(password, login, 100000, 128, 'sha512', (err, derivedKey) => {
-        if (err) throw err;
-        // console.log(derivedKey.toString('hex'));
-        return derivedKey.toString('hex');
-    });
+
+export const generatePasswordHash = (login, password) => pbkdf2.pbkdf2Sync(password, login, 25, 128, 'sha512').toString('hex');
+
+export const decryptActivities = (activities) => {
+    var enc_key_h;
+    var enc_key;
+    for (var i = 0; i < activities.length; i++) {
+        enc_key_h = activities[i].enc_key_h;
+
+        console.log(obj.id);
+    }
 }
