@@ -5,6 +5,7 @@ import Button from '../Button'
 import Input from '../Input'
 import { email, required } from '../../helpers/formValidators'
 import styles from './style.css'
+import Spinner from "../Spinner";
 
 class LoginForm extends React.Component {
   onSubmit = () => {
@@ -26,6 +27,7 @@ class LoginForm extends React.Component {
           validate={[required, email]}
           disabled={this.props.activeRequest}
         />
+          {this.props.activeRequest && <Spinner/>}
         <Field
           name='password'
           component={Input}

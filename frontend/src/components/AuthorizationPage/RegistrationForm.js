@@ -5,6 +5,7 @@ import Button from '../Button'
 import Input from '../Input'
 import { email, required } from '../../helpers/formValidators'
 import styles from './style.css'
+import Spinner from "../Spinner";
 
 class RegistrationForm extends React.Component {
   onSubmit = () => {
@@ -58,6 +59,7 @@ class RegistrationForm extends React.Component {
                 style={{width: '100%'}}
                 disabled={this.props.submitDisabled}
         />
+        {this.props.activeRequest && <Spinner/>}
         <p className={styles.formError}>{this.props.formError}</p>
         <p className={styles.suggestion}>Have account already?
           <Link to='/login'>Login</Link>
