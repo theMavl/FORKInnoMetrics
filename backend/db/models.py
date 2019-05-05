@@ -41,6 +41,7 @@ class Project(Document):
 
 class Activity(Document):
     enc_key_h = StringField(required=True)  # Encrypted encKey
+    iv = StringField(required=True)  # Initial vector
     idle_activity = BooleanField(default=False)
     activity_type = StringField(max_length=DEFAULT_STRING_MAX_LENGTH, default='os')
     user = ReferenceField(User)

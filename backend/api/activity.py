@@ -22,8 +22,8 @@ def add_activity(activity: Dict, user: str) -> Union[int, None, str]:
 
     ALL_FIELDS = [START_TIME_KEY, END_TIME_KEY, EXECUTABLE_KEY, BROWSER_TITLE_KEY, BROWSER_URL_KEY,
                   IP_ADDRESS_KEY, MAC_ADDRESS_KEY, IDLE_ACTIVITY_KEY, ACTIVITY_TYPE_KEY,
-                  VALUE_KEY, ENC_KEY_H]
-    COMPULSORY_FIELDS = [START_TIME_KEY, END_TIME_KEY, EXECUTABLE_KEY, ENC_KEY_H]
+                  VALUE_KEY, ENC_KEY_H, INIT_VECTOR_KEY]
+    COMPULSORY_FIELDS = [START_TIME_KEY, END_TIME_KEY, EXECUTABLE_KEY, ENC_KEY_H, INIT_VECTOR_KEY]
     data = {}
     for field in ALL_FIELDS:
         data[field] = activity.get(field)
@@ -33,6 +33,7 @@ def add_activity(activity: Dict, user: str) -> Union[int, None, str]:
 
     for key, value in data.copy().items():
         if value is None and key in COMPULSORY_FIELDS:
+            logger.exception('Some field is missing')
             return 0
 
     try:
@@ -46,6 +47,7 @@ def add_activity(activity: Dict, user: str) -> Union[int, None, str]:
             data[START_TIME_KEY] = datetime.fromtimestamp(int(start_time))
             data[END_TIME_KEY] = datetime.fromtimestamp(int(end_time))
         except Exception as e:
+            logger.exception(f'Failed to recognize datetime')
             #  Can't recognise this datetime
             return 0
 

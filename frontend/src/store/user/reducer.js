@@ -27,7 +27,7 @@ export const reducer = (state = initialState, action) => {
       }
 
     case USER_TYPES.LOGIN_SUCCESS:
-      saveUserToLocalStorage(action.token, action.password_h)
+      saveUserToLocalStorage(action.token, action.password_h, action.private_key_h)
       return {
         authorized: true,
         activeRequest: false,

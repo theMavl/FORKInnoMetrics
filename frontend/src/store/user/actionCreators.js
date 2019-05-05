@@ -16,7 +16,7 @@ export const loginRequest = () => (dispatch, getState) => {
 
     postRequest('/login', params)
         .then((result) => {
-            dispatch({type: USER_TYPES.LOGIN_SUCCESS, token: result.data.token, password_h: pass_h })
+            dispatch({type: USER_TYPES.LOGIN_SUCCESS, token: result.data.token, password_h: pass_h, private_key_h: result.data.private_key_h })
             redirectFromAuth()
         })
         .catch((error) => {

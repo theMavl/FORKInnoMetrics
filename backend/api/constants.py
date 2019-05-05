@@ -27,6 +27,7 @@ PRIVATE_KEY_H = 'private_key_h'
 OLD_PASSWORD_KEY = 'old_password'
 NEW_PASSWORD_KEY = 'new_password'
 ENC_KEY_H = 'enc_key_h'
+INIT_VECTOR_KEY = 'iv'
 
 ACTIVITY_KEY = 'activity'
 ACTIVITIES_KEY = 'activities'
