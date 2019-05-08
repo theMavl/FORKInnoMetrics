@@ -27,6 +27,10 @@ from logger import logger
 from utils import execute_function_in_parallel
 
 from Crypto.PublicKey import RSA
+from Crypto.Cipher import AES
+from Crypto import Random
+from Crypto.Cipher import PKCS1_OAEP
+import struct
 import Crypto.IO.PKCS8 as PKCS8
 import base64
 
@@ -177,8 +181,6 @@ def login():
         if _check_password(password, existing_user.password):
             login_user(existing_user)
 
-            # response = make_response(jsonify({MESSAGE_KEY: 'Success!', PUBLIC_KEY: existing_user.public_key,
-            #                               TOKEN_KEY: encode_auth_token(str(existing_user.id)).decode()}), HTTPStatus.OK)
             response = make_response(
                 jsonify({MESSAGE_KEY: 'Success!',
                          TOKEN_KEY: encode_auth_token(str(existing_user.id)).decode(),
@@ -193,6 +195,66 @@ def login():
     except Exception as e:
         logger.exception(f'Failed to login user. Error {e}')
         return make_response(jsonify({MESSAGE_KEY: 'Something bad happened'}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
+# @app.route('/DEBUG_gen', methods=['GET'])
+# def DEBUG_GENERATE_SAMPLE():
+#     from Crypto.Protocol.KDF import PBKDF2
+#     from Crypto.Util.Padding import pad
+#     try:
+#         public_key = RSA.import_key(extern_key=base64.b64decode(current_user.public_key.encode('utf-8')).decode('utf-8'))
+#
+#         enc_key = Random.new().read(32)
+#
+#         enc_key = b'ENC_KEY_ENC_KEY_ENC_KEY_ENC_KEY_ENC_KEY_ENC_KEY_ENC_KEY_ENC_KEY'[:32]
+#
+#         cipher = PKCS1_OAEP.new(public_key)
+#
+#         enc_key_h = cipher.encrypt(enc_key)
+#
+#         iv = Random.new().read(AES.block_size)
+#
+#         cipher = AES.new(enc_key, AES.MODE_CBC, iv)
+#
+#         str_plain = "Яндекс Браузер!!!".encode('utf-8')
+#
+#         str_plain = pad(str_plain, AES.block_size)
+#
+#         ex_n = cipher.encrypt(str_plain)
+#
+#         activity_data = {
+#             START_TIME_KEY: str(int(datetime.datetime.now().strftime("%s")) - 10),
+#             END_TIME_KEY: str(int(datetime.datetime.now().strftime("%s"))),
+#             EXECUTABLE_KEY: ex_n.hex(),  # base64.b64encode(ex_n),  # (iv + ex_n).hex(),
+#             ENC_KEY_H: enc_key_h.hex(),  # base64.b64encode(enc_key_h),  # enc_key_h.hex(),
+#             INIT_VECTOR_KEY: iv.hex()  # base64.b64encode(iv)  #
+#         }
+#
+#         print("AAAAAAAA", enc_key_h.hex())
+#
+#         result = add_activity(activity_data, current_user.to_dbref())
+#
+#         # pass_h = PBKDF2(password='123', salt=b'ala@ala.com', count=25, dkLen=128)
+#         #
+#         # print(pass_h.hex())
+#         #
+#         # private_key = RSA.importKey(extern_key=current_user.private_key_h, passphrase=pass_h.hex())
+#         #
+#         # print(private_key.export_key())
+#         #
+#         # decipher = PKCS1_OAEP.new(private_key)
+#         #
+#         # enc_key_decrypted = decipher.decrypt(enc_key_h)
+#         # print(enc_key_decrypted)
+#
+#         if not result:
+#             return make_response(jsonify({MESSAGE_KEY: 'Failed to create activity'}),
+#                                  HTTPStatus.INTERNAL_SERVER_ERROR)
+#
+#         return make_response(jsonify({MESSAGE_KEY: 'OK'}), HTTPStatus.OK)
+#     except Exception as e:
+#         logger.exception(f'Failed to login user. Error {e}')
+#         return make_response(jsonify({MESSAGE_KEY: 'Something bad happened'}), HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
 @app.route('/user', methods=['POST'])
@@ -254,7 +316,7 @@ def user_register():
         private_key, public_key = key, key.publickey()
         private_key_h = private_key.export_key(format="PEM", pkcs=8, passphrase=password)
 
-        user.public_key = public_key.export_key().decode("utf-8")
+        user.public_key = base64.b64encode(public_key.export_key()).decode('utf-8')
         user.private_key_h = private_key_h.decode("utf-8")
 
         if not user:

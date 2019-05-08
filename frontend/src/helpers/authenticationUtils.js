@@ -63,7 +63,7 @@ export const decryptActivities = (activities) => {
 
             for (var j = 0; j < keys.length; j++) {
                 if (encrypted_fields.includes(keys[j])) {
-                    decipher = forge.cipher.createDecipher('AES-CBC', forge.util.createBuffer(enc_key, 'utf8'));
+                    decipher = forge.cipher.createDecipher('AES-CBC', forge.util.createBuffer(enc_key));
                     decipher.start({
                         iv: forge.util.hexToBytes(activities[i].iv)
                     });
@@ -71,7 +71,7 @@ export const decryptActivities = (activities) => {
                     decipher.update(forge.util.createBuffer(tmp_h, 'binary'));
                     tmp = decipher.finish();
                     if (tmp) {
-                        activities[i][keys[j].toString()] = decipher.output.data;
+                        activities[i][keys[j].toString()] = decipher.output.toString('utf8');
                     }
                 }
             }
